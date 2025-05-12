@@ -51,8 +51,8 @@ Mai Thanh Bình -    22146272
                 reg = <0x29>;
             };
 7. Lưu lại file bằng cách `Ctrl + O và Enter` và Thoát ra bằng `Ctrl + X`
-8. Chuyển đổi lại file bcm2712-rpi-5-b.dts về  bcm2712-rpi-5-b.dtb sử dụng câu lệnh `sudo dtc -I dts -O dtb -o bcm2712-rpi-5-b.dtb bcm2712-rpi-5-b.dts`
-9. Sử dụng câu lệnh reboot để  khởi động lại Raspberry Pi và đợi cho máy kết nối lại
+8. Chuyển đổi lại file `bcm2712-rpi-5-b.dts` về  `bcm2712-rpi-5-b.dtb` sử dụng câu lệnh `sudo dtc -I dts -O dtb -o bcm2712-rpi-5-b.dtb bcm2712-rpi-5-b.dts`
+9. Sử dụng câu lệnh `sudo reboot` để  khởi động lại Raspberry Pi và đợi cho máy kết nối lại wifi
 
 ### 2.4. Hướng dẫn cài đặt driver Kernel TCS34725 cho Raspberry Pi
 1. Đảm bảo kết nối giữa cảm biến TCS34725 với Raspberry Pi 5
