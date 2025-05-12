@@ -82,7 +82,7 @@
     Thiết bị /dev/tcs34725 có thể được truy cập thông qua các lệnh ioctl sau:
     Lệnh IOCTL	                    Mã số	                     Mô tả
     TCS34725_IOCTL_READ_CLEAR	_IOR('t', 1, int)	    Đọc giá trị ánh sáng tổng (Clear)
-    TCS34725_IOCTL_READ_RED	    _IOR('t', 2, int)	    Đọc giá trị màu Đỏ
+    TCS34725_IOCTL_READ_RED	        _IOR('t', 2, int)	    Đọc giá trị màu Đỏ
     TCS34725_IOCTL_READ_GREEN	_IOR('t', 3, int)	    Đọc giá trị màu Xanh lá
     TCS34725_IOCTL_READ_BLUE	_IOR('t', 4, int)	    Đọc giá trị màu Xanh dương
 
