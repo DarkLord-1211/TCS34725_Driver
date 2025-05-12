@@ -57,8 +57,8 @@ Mai Thanh Bình -    22146272
 ### 2.4. Hướng dẫn cài đặt driver Kernel TCS34725 cho Raspberry Pi
 1. Đảm bảo kết nối giữa cảm biến TCS34725 với Raspberry Pi 5
 2. Tạo 1 Makeflie với nội dung như sau:
-        obj-m += tcs34725_ioctl.o
-        KDIR = /lib/modules/$(shell uname -r)/build
+        `obj-m += tcs34725_ioctl.o`
+        `KDIR = /lib/modules/$(shell uname -r)/build`
 
         all:
             make -C $(KDIR) M=$(shell pwd) modules
