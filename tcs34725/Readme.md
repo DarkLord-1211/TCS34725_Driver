@@ -46,13 +46,15 @@ Mai Thanh Bình -    22146272
 4. Sử dụng tổ hợp phím `Ctrl + W` tìm kiếm aliases
 5. Kiếm đến dòng chứa cụm i2c1 (ví dụ: i2c1@74000) dùng `Ctrl + Shift + C` để copy cụm từ và tìm kiếm 1 lần nữa
 6. Ở dòng cuối cùng của hàm i2c1@174000, thêm những dòng sau:
-            tcs34725@29 {
+
+           tcs34725@29 {
                 compatible = "taos,tcs34725";
                 reg = <0x29>;
-            };
-7. Lưu lại file bằng cách `Ctrl + O và Enter` và Thoát ra bằng `Ctrl + X`
-8. Chuyển đổi lại file bcm2712-rpi-5-b.dts về  bcm2712-rpi-5-b.dtb sử dụng câu lệnh `sudo dtc -I dts -O dtb -o bcm2712-rpi-5-b.dtb bcm2712-rpi-5-b.dts`
-9. Sử dụng câu lệnh reboot để  khởi động lại Raspberry Pi và đợi cho máy kết nối lại
+           };
+   
+8. Lưu lại file bằng cách `Ctrl + O và Enter` và Thoát ra bằng `Ctrl + X`
+9. Chuyển đổi lại file bcm2712-rpi-5-b.dts về  bcm2712-rpi-5-b.dtb sử dụng câu lệnh `sudo dtc -I dts -O dtb -o bcm2712-rpi-5-b.dtb bcm2712-rpi-5-b.dts`
+10. Sử dụng câu lệnh reboot để  khởi động lại Raspberry Pi và đợi cho máy kết nối lại
 
 ### 2.4. Hướng dẫn cài đặt driver Kernel TCS34725 cho Raspberry Pi
 1. Đảm bảo kết nối giữa cảm biến TCS34725 với Raspberry Pi 5
