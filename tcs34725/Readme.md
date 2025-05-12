@@ -24,8 +24,8 @@ Mai Thanh Bình -    22146272
 
     Dùng câu lệnh sau để cập nhật Raspberry Pi 5
     ```bash
-   `sudo apt update
-    sudo apt install build-essential raspberrypi-kernel-headers i2c-tools`
+    sudo apt update
+    sudo apt install build-essential raspberrypi-kernel-headers i2c-tools
 
 ### 2.2. Hướng dẫn kết nối với chân (sử dụng bộ I2C1)
     |    TCS34725   |     Pi 5      |   Physical Pin   |
@@ -57,15 +57,16 @@ Mai Thanh Bình -    22146272
 ### 2.4. Hướng dẫn cài đặt driver Kernel TCS34725 cho Raspberry Pi
 1. Đảm bảo kết nối giữa cảm biến TCS34725 với Raspberry Pi 5
 2. Tạo 1 Makeflie với nội dung như sau:
-        `obj-m += tcs34725_ioctl.o`
-        `KDIR = /lib/modules/$(shell uname -r)/build`
 
+        obj-m += tcs34725_ioctl.o
+        KDIR = /lib/modules/$(shell uname -r)/build
         all:
             make -C $(KDIR) M=$(shell pwd) modules
         clean: 
             make -C $(KDIR) M=$(shell pwd) clean
-3. Tại thư mục chứa file driver và Makefile vừa tạo, sử dụng câu lệnh `make`
-4. Tiếp theo cài đặt driver bằng câu lệnh `sudo insmod tcs34725_ioctl.ko`
+   
+4. Tại thư mục chứa file driver và Makefile vừa tạo, sử dụng câu lệnh `make`
+5. Tiếp theo cài đặt driver bằng câu lệnh `sudo insmod tcs34725_ioctl.ko`
     Kiểm tra:
             `dmesg | grep TCS34725`
 
@@ -73,7 +74,7 @@ Mai Thanh Bình -    22146272
 
     TCS34725: Driver loaded, device /dev/tcs34725 created
 
-5. Khi không sử dụng driver nữa sử dụng câu lệnh ` sudo rmmod tcs34725_ioctl`, sau đó dùng câu lệnh `make clean` để  xóa các file đã được biên dịch từ `make`
+6. Khi không sử dụng driver nữa sử dụng câu lệnh `sudo rmmod tcs34725_ioctl` , sau đó dùng câu lệnh `make clean` để  xóa các file đã được biên dịch từ `make`
 
 ## 3. Hướng dẫn sử dụng các câu lệnh trong driver
 ### 3.1.  ⚙️ Sử dụng câu lệnh
