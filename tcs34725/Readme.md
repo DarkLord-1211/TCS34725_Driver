@@ -28,12 +28,12 @@ Mai Thanh Bình -    22146272
     sudo apt install build-essential raspberrypi-kernel-headers i2c-tools`
 
 ### 2.2. Hướng dẫn kết nối với chân (sử dụng bộ I2C1)
-|    TCS34725   |     Pi 5      |   Physical Pin   |
-|---------------|---------------|------------------|
-|      VIN      |      3.3V     |  Pin 1 / Pin 17  |
-|      GND      |      0V       |  Pin 6 / Pin 9   |
-|      SDA      |      SDA 1    |      Pin 3       |
-|      SCL      |      SCL 1    |      Pin 5       |
+    |    TCS34725   |     Pi 5      |   Physical Pin   |
+    |---------------|---------------|------------------|
+    |      VIN      |      3.3V     |  Pin 1 / Pin 17  |
+    |      GND      |      0V       |  Pin 6 / Pin 9   |
+    |      SDA      |      SDA 1    |      Pin 3       |
+    |      SCL      |      SCL 1    |      Pin 5       |
 
 - Đảm bảo hệ thống nhận diện cảm biến:
     Kiểm tra bằng câu lệnh ` i2cdetect -y 1 `
@@ -67,11 +67,11 @@ Mai Thanh Bình -    22146272
 3. Tại thư mục chứa file driver và Makefile vừa tạo, sử dụng câu lệnh `make`
 4. Tiếp theo cài đặt driver bằng câu lệnh `sudo insmod tcs34725_ioctl.ko`
     Kiểm tra:
-        dmesg | grep TCS34725
+            `dmesg | grep TCS34725`
 
-        Nếu thành công, bạn sẽ thấy dòng như:
+    Nếu thành công, bạn sẽ thấy dòng như:
 
-        TCS34725: Driver loaded, device /dev/tcs34725 created
+    TCS34725: Driver loaded, device /dev/tcs34725 created
 
 5. Khi không sử dụng driver nữa sử dụng câu lệnh ` sudo rmmod tcs34725_ioctl`, sau đó dùng câu lệnh `make clean` để  xóa các file đã được biên dịch từ `make`
 
@@ -86,77 +86,77 @@ Mai Thanh Bình -    22146272
     TCS34725_IOCTL_READ_BLUE	_IOR('t', 4, int)	    Đọc giá trị màu Xanh dương
 
 ### 3.2. Hướng dẫn tạo code để kiểm tra và đọc giá trị trả về của cảm biến TCS34725
-1. Nạp vào các thư viện cần thiết như :
-    #include <stdio.h>          // printf, perror, fflush
-    #include <fcntl.h>          // open, O_RDONLY
-    #include <unistd.h>         // close, usleep
-    #include <sys/ioctl.h>      // ioctl
-    #include <signal.h>         // signal, sig_atomic_t
-    #include <stdlib.h>         // exit
-2. Định nghĩa các macro ioctl 
-    #define TCS34725_IOCTL_MAGIC 't'
-    #define TCS34725_IOCTL_READ_CLEAR _IOR(TCS34725_IOCTL_MAGIC, 1, int)
-    #define TCS34725_IOCTL_READ_RED   _IOR(TCS34725_IOCTL_MAGIC, 2, int)
-    #define TCS34725_IOCTL_READ_GREEN _IOR(TCS34725_IOCTL_MAGIC, 3, int)
-    #define TCS34725_IOCTL_READ_BLUE  _IOR(TCS34725_IOCTL_MAGIC, 4, int)
+## 1. Nạp vào các thư viện cần thiết như :
+        #include <stdio.h>          // printf, perror, fflush
+        #include <fcntl.h>          // open, O_RDONLY
+        #include <unistd.h>         // close, usleep
+        #include <sys/ioctl.h>      // ioctl
+        #include <signal.h>         // signal, sig_atomic_t
+        #include <stdlib.h>         // exit
+## 2. Định nghĩa các macro ioctl 
+        #define TCS34725_IOCTL_MAGIC 't'
+        #define TCS34725_IOCTL_READ_CLEAR _IOR(TCS34725_IOCTL_MAGIC, 1, int)
+        #define TCS34725_IOCTL_READ_RED   _IOR(TCS34725_IOCTL_MAGIC, 2, int)
+        #define TCS34725_IOCTL_READ_GREEN _IOR(TCS34725_IOCTL_MAGIC, 3, int)
+        #define TCS34725_IOCTL_READ_BLUE  _IOR(TCS34725_IOCTL_MAGIC, 4, int)
 
-TCS34725_IOCTL_MAGIC là mã định danh dành riêng cho thiết bị này (thường là một ký tự).
-_IOR() là macro định nghĩa lệnh ioctl để đọc dữ liệu từ kernel driver vào user-space
+    TCS34725_IOCTL_MAGIC là mã định danh dành riêng cho thiết bị này (thường là một ký tự).
+    _IOR() là macro định nghĩa lệnh ioctl để đọc dữ liệu từ kernel driver vào user-space
 
 3. Xử lý tín hiệu ngắt
     Dùng để dừng vòng lặp khi người dùng nhấn `Ctrl + C`
-        volatile sig_atomic_t keep_running = 1;
+        `volatile sig_atomic_t keep_running = 1;`
     Hàm xử  lý tín hiệu ngắt 
-        void handle_sigint(int sig) {
+        `void handle_sigint(int sig) {
         keep_running = 0;
-    }
+    }`
     Khi nhấn Ctrl+C, hệ điều hành gửi tín hiệu SIGINT. Hàm này sẽ gán keep_running = 0 để thoát vòng lặp chính
 4. Hàm main()
     -------------------------------------------
-    int fd = open("/dev/tcs34725", O_RDONLY);
-    if (fd < 0) {
-        perror("Failed to open device");
-        return 1;
-    }
+        int fd = open("/dev/tcs34725", O_RDONLY);
+        if (fd < 0) {
+            perror("Failed to open device");
+            return 1;
+        }
     Mở file thiết bị /dev/tcs34725 để đọc dữ liệu từ driver đã cài đặt
     Khi không mở được thiết bị sẽ có thông báo lỗi
     -------------------------------------------
-    signal(SIGINT, handle_sigint);  // Ctrl+C cleanup
+        signal(SIGINT, handle_sigint);  // Ctrl+C cleanup
     Gắn hàm xử lý  SIGINT với handle_sigint()
     -------------------------------------------
-    int clear, red, green, blue;
+        int clear, red, green, blue;
     Lưu các giá trị cảm biến
     ------------------------------------------
     ### Vòng lặp để đọc dữ liệu:
-    while (keep_running) {
-        if (ioctl(fd, TCS34725_IOCTL_READ_CLEAR, &clear) < 0 ||
-            ioctl(fd, TCS34725_IOCTL_READ_RED, &red) < 0 ||
-            ioctl(fd, TCS34725_IOCTL_READ_GREEN, &green) < 0 ||
-            ioctl(fd, TCS34725_IOCTL_READ_BLUE, &blue) < 0) {
-            perror("Failed to read from device");
-            break;
-        }
-        Gọi ioctl() để yêu cầu driver trả về các giá trị đo được từ cảm biến và lưu vào biến tương ứng.
-        Nếu bất kỳ lệnh nào thất bại, in lỗi và thoát vòng lặp.
-        -------------------------------------------------------------------
-        printf("\rClear: %-5d | Red: %-5d | Green: %-5d | Blue: %-5d", clear, red, green, blue);
-        fflush(stdout);
-        usleep(200000);  // 200ms delay
+        while (keep_running) {
+            if (ioctl(fd, TCS34725_IOCTL_READ_CLEAR, &clear) < 0 ||
+                ioctl(fd, TCS34725_IOCTL_READ_RED, &red) < 0 ||
+                ioctl(fd, TCS34725_IOCTL_READ_GREEN, &green) < 0 ||
+                ioctl(fd, TCS34725_IOCTL_READ_BLUE, &blue) < 0) {
+                perror("Failed to read from device");
+                break;
+            }
+    Gọi ioctl() để yêu cầu driver trả về các giá trị đo được từ cảm biến và lưu vào biến tương ứng.
+    Nếu bất kỳ lệnh nào thất bại, in lỗi và thoát vòng lặp.
+   -------------------------------------------------------------------
+            printf("\rClear: %-5d | Red: %-5d | Green: %-5d | Blue: %-5d", clear, red, green, blue);
+            fflush(stdout);
+            usleep(200000);  // 200ms delay
 
-        In kết quả ra cùng một dòng (\r) để cập nhật liên tục.
-        fflush(stdout) để đảm bảo in ngay lập tức.
-        Delay giữa các lần đo để giảm tải cảm biến và CPU
-        -------------------------------------------------------------------
-    }
-    printf("\nExiting.\n");
-    close(fd);
-    return 0;
+    In kết quả ra cùng một dòng (\r) để cập nhật liên tục.
+    fflush(stdout) để đảm bảo in ngay lập tức.
+    Delay giữa các lần đo để giảm tải cảm biến và CPU
+    -------------------------------------------------------------------
+        }
+        printf("\nExiting.\n");
+        close(fd);
+        return 0;
     Dọn dẹp khi thoát khỏi chương trình
 ## 4. Các lỗi thường gặp
-Lỗi                                                         Nguyên nhân                                 Giải pháp 
-Failed to open device                           Thiếu quyền hoặc thiết bị chưa tồn tại         Dùng sudo, kiểm tra /dev/tcs34725
-Unexpected ID                                   Cảm biến không phản hồi đúng                   Kiểm tra kết nối, dây I2C   
-No such file or directory: /dev/tcs34725        Driver chưa được nạp thành công                Kiểm tra dmesg, đảm bảo insmod thành công
+    Lỗi                                                         Nguyên nhân                                 Giải pháp 
+    Failed to open device                           Thiếu quyền hoặc thiết bị chưa tồn tại         Dùng sudo, kiểm tra /dev/tcs34725
+    Unexpected ID                                   Cảm biến không phản hồi đúng                   Kiểm tra kết nối, dây I2C   
+    No such file or directory: /dev/tcs34725        Driver chưa được nạp thành công                Kiểm tra dmesg, đảm bảo insmod thành công
 
 ## 5. 📚 Tài liệu tham khảo
 
