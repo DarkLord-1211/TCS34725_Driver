@@ -1,7 +1,7 @@
 # TCS34725 Kernel Driver for Linux
-Mai Minh Đức -      22146296
-Nguyễn Hoàng Danh - 22146281
-Mai Thanh Bình -    22146272
+- Mai Minh Đức -      22146296
+- Nguyễn Hoàng Danh - 22146281
+- Mai Thanh Bình -    22146272
 
 ## 📝 1.Giới thiệu và ứng dụng của TCS34725
 
@@ -39,9 +39,9 @@ Mai Thanh Bình -    22146272
     Kiểm tra bằng câu lệnh ` i2cdetect -y 1 `
     Kết quả sẽ hiển thị địa chỉ 0x29 nếu TCS34725 được kết nối đúng.
 
-### 2.3. Cập nhật Device Tree cho file bcm2712-rpi-5-b.dtb (chỉ đối với bản Raspberry Pi5 bản lưu hành thị trường)
+### 2.3. Cập nhật Device Tree cho file `bcm2712-rpi-5-b.dtb` (chỉ đối với bản Raspberry Pi 5 bản lưu hành thị trường)
 1. Mở terminal và truy cập vào thư mục boot hoặc thư mục boot/firmware (dùng câu lệnh `cd /boot` hoặc `cd /boot/firmware`)
-2. Dùng câu lệnh `sudo dtc -I dtb -O dts -o bcm2712-rpi-5-b.dts bcm2712-rpi-5-b.dtb` để chuyển đổi file bcm2712-rpi-5-b.dtb sang đuôi .dts
+2. Dùng câu lệnh `sudo dtc -I dtb -O dts -o bcm2712-rpi-5-b.dts bcm2712-rpi-5-b.dtb` để chuyển đổi file `bcm2712-rpi-5-b.dtb` sang đuôi `.dts`
 3. Truy cập vào file .dts để chỉnh sửa bằng câu lệnh `sudo nano bcm2712-rpi-5-b.dts`
 4. Sử dụng tổ hợp phím `Ctrl + W` tìm kiếm aliases
 5. Kiếm đến dòng chứa cụm i2c1 (ví dụ: i2c1@74000) dùng `Ctrl + Shift + C` để copy cụm từ và tìm kiếm 1 lần nữa
